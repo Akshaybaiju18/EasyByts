@@ -1,11 +1,10 @@
-/**
- * Portfolio CMS Backend Server - Basic Setup for Testing
- */
-
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
+
+// Import routes
+const projectRoutes = require('./routes/projects');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -27,6 +26,8 @@ const connectDB = async () => {
 };
 
 // Routes
+app.use('/api/projects', projectRoutes);
+
 app.get('/api/health', (req, res) => {
   res.status(200).json({
     status: 'success',
