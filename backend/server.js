@@ -5,6 +5,8 @@ require('dotenv').config();
 
 // Import routes
 const projectRoutes = require('./routes/projects');
+const skillRoutes = require('./routes/skills');
+const blogRoutes = require('./routes/blog');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -27,7 +29,8 @@ const connectDB = async () => {
 
 // Routes
 app.use('/api/projects', projectRoutes);
-
+app.use('/api/skills', skillRoutes);
+app.use('/api/blog', blogRoutes);
 app.get('/api/health', (req, res) => {
   res.status(200).json({
     status: 'success',
