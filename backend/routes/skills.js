@@ -1,19 +1,20 @@
 // routes/skills.js
-// API routes for managing skills
+// API routes for managing skills - PROTECTED VERSION
 
 const express = require('express');
 const router = express.Router();
 const Skill = require('../models/Skill');
+const { authenticateToken, requireAdmin } = require('../middleware/auth');
 
-// GET /api/skills - Get all skills
+// GET /api/skills - Get all skills (PUBLIC - for portfolio display)
 router.get('/', async (req, res) => {
   try {
-    const { 
-      category, 
-      level, 
-      featured, 
+    const {
+      category,
+      level,
+      featured,
       status = 'active',
-      sort = 'category,sortOrder' 
+      sort = 'category,sortOrder'
     } = req.query;
 
     // Build query
@@ -62,7 +63,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// GET /api/skills/categories - Get all skill categories
+// GET /api/skills/categories - Get all skill categories (PUBLIC)
 router.get('/categories', async (req, res) => {
   try {
     const categories = await Skill.distinct('category');
@@ -86,7 +87,7 @@ router.get('/categories', async (req, res) => {
   }
 });
 
-// GET /api/skills/:id - Get single skill
+// GET /api/skills/:id - Get single skill (PUBLIC - for admin editing)
 router.get('/:id', async (req, res) => {
   try {
     const skill = await Skill.findById(req.params.id)
@@ -113,8 +114,10 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// POST /api/skills - Create new skill
-router.post('/', async (req, res) => {
+// 🔒 PROTECTED ROUTES - Admin only from here
+
+// POST /api/skills - Create new skill (ADMIN ONLY)
+router.post('/', authenticateToken, requireAdmin, async (req, res) => {
   try {
     const skill = new Skill(req.body);
     await skill.save();
@@ -150,8 +153,8 @@ router.post('/', async (req, res) => {
   }
 });
 
-// PUT /api/skills/:id - Update skill
-router.put('/:id', async (req, res) => {
+// PUT /api/skills/:id - Update skill (ADMIN ONLY)
+router.put('/:id', authenticateToken, requireAdmin, async (req, res) => {
   try {
     const skill = await Skill.findByIdAndUpdate(
       req.params.id,
@@ -180,8 +183,8 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// DELETE /api/skills/:id - Delete skill
-router.delete('/:id', async (req, res) => {
+// DELETE /api/skills/:id - Delete skill (ADMIN ONLY)
+router.delete('/:id', authenticateToken, requireAdmin, async (req, res) => {
   try {
     const skill = await Skill.findByIdAndDelete(req.params.id);
 

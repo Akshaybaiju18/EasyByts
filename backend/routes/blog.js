@@ -1,35 +1,64 @@
 // routes/blog.js
-// API routes for managing blog posts
+// API routes for managing blog posts - COMPLETE FIXED VERSION
 
 const express = require('express');
 const router = express.Router();
 const BlogPost = require('../models/BlogPost');
+const { authenticateToken, requireAdmin } = require('../middleware/auth');
 
-// GET /api/blog - Get all blog posts
+// Helper function to create slug
+const createSlug = (title) => {
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+};
+
+// GET /api/blog - Get all blog posts (PUBLIC + ADMIN)
 router.get('/', async (req, res) => {
   try {
-    const { 
-      status = 'published',
+    console.log('🔍 Blog GET - Query params:', req.query);
+    
+    const {
+      status,
       category,
       tag,
       featured,
       limit = 10,
       page = 1,
-      sort = '-publishedAt'
+      sort = '-createdAt'
     } = req.query;
 
     // Build query
     let query = {};
 
-    if (status) query.status = status;
+    // Handle status filtering
+    if (status) {
+      if (status === 'all') {
+        // Don't add status filter - get everything (for admin)
+        console.log('🔍 Getting ALL blog posts (admin view)');
+      } else {
+        // Filter by specific status
+        query.status = status;
+        console.log('🔍 Filtering by status:', status);
+        
+        // Only include published posts with valid publish date
+        if (status === 'published') {
+          query.publishedAt = { $lte: new Date() };
+        }
+      }
+    } else {
+      // Default behavior - get published only (for public)
+      query.status = 'published';
+      query.publishedAt = { $lte: new Date() };
+      console.log('🔍 Default: getting published blog posts only');
+    }
+    
     if (category) query.category = category;
     if (tag) query.tags = { $in: [tag] };
     if (featured !== undefined) query.featured = featured === 'true';
 
-    // Only include published posts for public API
-    if (status === 'published') {
-      query.publishedAt = { $lte: new Date() };
-    }
+    console.log('🔍 Final query:', query);
 
     // Pagination
     const skip = (parseInt(page) - 1) * parseInt(limit);
@@ -38,11 +67,13 @@ router.get('/', async (req, res) => {
       .sort(sort)
       .limit(parseInt(limit))
       .skip(skip)
-      .select('title slug excerpt author featuredImage category tags publishedAt readTime views likes featured')
+      .select('title slug excerpt author featuredImage category tags publishedAt readTime views likes featured status createdAt')
       .populate('relatedPosts', 'title slug excerpt featuredImage');
 
     const total = await BlogPost.countDocuments(query);
     const totalPages = Math.ceil(total / parseInt(limit));
+
+    console.log('🔍 Found', posts.length, 'blog posts');
 
     res.json({
       success: true,
@@ -53,7 +84,7 @@ router.get('/', async (req, res) => {
       data: posts
     });
   } catch (error) {
-    console.error('Error fetching blog posts:', error);
+    console.error('❌ Error fetching blog posts:', error);
     res.status(500).json({
       success: false,
       message: 'Server error fetching blog posts'
@@ -64,20 +95,13 @@ router.get('/', async (req, res) => {
 // GET /api/blog/categories - Get all blog categories
 router.get('/categories', async (req, res) => {
   try {
-    const categories = await BlogPost.distinct('category', { status: 'published' });
-    const categoryStats = await BlogPost.aggregate([
-      { $match: { status: 'published' } },
-      { $group: { _id: '$category', count: { $sum: 1 } } },
-      { $sort: { count: -1 } }
-    ]);
-
+    const categories = await BlogPost.distinct('category');
     res.json({
       success: true,
-      data: categories,
-      stats: categoryStats
+      data: categories
     });
   } catch (error) {
-    console.error('Error fetching blog categories:', error);
+    console.error('❌ Error fetching categories:', error);
     res.status(500).json({
       success: false,
       message: 'Server error fetching categories'
@@ -89,7 +113,6 @@ router.get('/categories', async (req, res) => {
 router.get('/tags', async (req, res) => {
   try {
     const tags = await BlogPost.aggregate([
-      { $match: { status: 'published' } },
       { $unwind: '$tags' },
       { $group: { _id: '$tags', count: { $sum: 1 } } },
       { $sort: { count: -1 } }
@@ -100,7 +123,7 @@ router.get('/tags', async (req, res) => {
       data: tags.map(tag => ({ name: tag._id, count: tag.count }))
     });
   } catch (error) {
-    console.error('Error fetching blog tags:', error);
+    console.error('❌ Error fetching tags:', error);
     res.status(500).json({
       success: false,
       message: 'Server error fetching tags'
@@ -108,15 +131,32 @@ router.get('/tags', async (req, res) => {
   }
 });
 
-// GET /api/blog/:slug - Get single blog post by slug
-router.get('/:slug', async (req, res) => {
+// GET /api/blog/:identifier - Get single blog post by slug or ID
+router.get('/:identifier', async (req, res) => {
   try {
-    const post = await BlogPost.findOne({ 
-      slug: req.params.slug,
-      status: 'published'
-    })
-    .populate('relatedPosts', 'title slug excerpt featuredImage publishedAt readTime')
-    .select('-__v');
+    const { identifier } = req.params;
+    
+    let post;
+    if (identifier.match(/^[0-9a-fA-F]{24}$/)) {
+      // It's a MongoDB ObjectId (for admin editing)
+      post = await BlogPost.findById(identifier)
+        .populate('relatedPosts', 'title slug excerpt featuredImage publishedAt readTime')
+        .select('-__v');
+    } else {
+      // It's a slug (for public viewing)
+      post = await BlogPost.findOne({
+        slug: identifier,
+        status: 'published'
+      })
+      .populate('relatedPosts', 'title slug excerpt featuredImage publishedAt readTime')
+      .select('-__v');
+      
+      // Increment view count for published posts only
+      if (post) {
+        post.views += 1;
+        await post.save();
+      }
+    }
 
     if (!post) {
       return res.status(404).json({
@@ -125,16 +165,12 @@ router.get('/:slug', async (req, res) => {
       });
     }
 
-    // Increment view count
-    post.views += 1;
-    await post.save();
-
     res.json({
       success: true,
       data: post
     });
   } catch (error) {
-    console.error('Error fetching blog post:', error);
+    console.error('❌ Error fetching blog post:', error);
     res.status(500).json({
       success: false,
       message: 'Server error fetching blog post'
@@ -142,11 +178,34 @@ router.get('/:slug', async (req, res) => {
   }
 });
 
-// POST /api/blog - Create new blog post
-router.post('/', async (req, res) => {
+// 🔒 PROTECTED ROUTES - Admin only
+
+// POST /api/blog - Create new blog post (ADMIN ONLY)
+router.post('/', authenticateToken, requireAdmin, async (req, res) => {
   try {
-    const post = new BlogPost(req.body);
+    console.log('🔍 Creating blog post:', req.body.title);
+    
+    // Generate slug from title
+    const baseSlug = createSlug(req.body.title);
+    
+    // Check if slug already exists and create unique one
+    let slug = baseSlug;
+    let counter = 1;
+    
+    while (await BlogPost.findOne({ slug })) {
+      slug = `${baseSlug}-${counter}`;
+      counter++;
+    }
+
+    const postData = {
+      ...req.body,
+      slug
+    };
+
+    const post = new BlogPost(postData);
     await post.save();
+
+    console.log('✅ Blog post created:', post.title, 'with slug:', post.slug);
 
     res.status(201).json({
       success: true,
@@ -154,7 +213,7 @@ router.post('/', async (req, res) => {
       data: post
     });
   } catch (error) {
-    console.error('Error creating blog post:', error);
+    console.error('❌ Error creating blog post:', error);
 
     if (error.name === 'ValidationError') {
       const errors = Object.values(error.errors).map(e => e.message);
@@ -165,13 +224,6 @@ router.post('/', async (req, res) => {
       });
     }
 
-    if (error.code === 11000) {
-      return res.status(400).json({
-        success: false,
-        message: 'Blog post with this slug already exists'
-      });
-    }
-
     res.status(500).json({
       success: false,
       message: 'Server error creating blog post'
@@ -179,9 +231,26 @@ router.post('/', async (req, res) => {
   }
 });
 
-// PUT /api/blog/:id - Update blog post
-router.put('/:id', async (req, res) => {
+// PUT /api/blog/:id - Update blog post (ADMIN ONLY)
+router.put('/:id', authenticateToken, requireAdmin, async (req, res) => {
   try {
+    console.log('🔍 Updating blog post:', req.params.id);
+    
+    // If title changed, update slug
+    if (req.body.title) {
+      const newSlug = createSlug(req.body.title);
+      
+      // Check if new slug conflicts with other posts
+      const existingPost = await BlogPost.findOne({ 
+        slug: newSlug, 
+        _id: { $ne: req.params.id } 
+      });
+      
+      if (!existingPost) {
+        req.body.slug = newSlug;
+      }
+    }
+
     const post = await BlogPost.findByIdAndUpdate(
       req.params.id,
       req.body,
@@ -195,13 +264,15 @@ router.put('/:id', async (req, res) => {
       });
     }
 
+    console.log('✅ Blog post updated:', post.title);
+
     res.json({
       success: true,
       message: 'Blog post updated successfully',
       data: post
     });
   } catch (error) {
-    console.error('Error updating blog post:', error);
+    console.error('❌ Error updating blog post:', error);
     res.status(500).json({
       success: false,
       message: 'Server error updating blog post'
@@ -209,8 +280,8 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// DELETE /api/blog/:id - Delete blog post
-router.delete('/:id', async (req, res) => {
+// DELETE /api/blog/:id - Delete blog post (ADMIN ONLY)
+router.delete('/:id', authenticateToken, requireAdmin, async (req, res) => {
   try {
     const post = await BlogPost.findByIdAndDelete(req.params.id);
 
@@ -221,12 +292,14 @@ router.delete('/:id', async (req, res) => {
       });
     }
 
+    console.log('✅ Blog post deleted:', post.title);
+
     res.json({
       success: true,
       message: 'Blog post deleted successfully'
     });
   } catch (error) {
-    console.error('Error deleting blog post:', error);
+    console.error('❌ Error deleting blog post:', error);
     res.status(500).json({
       success: false,
       message: 'Server error deleting blog post'
