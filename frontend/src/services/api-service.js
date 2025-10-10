@@ -1,5 +1,4 @@
-// src/services/api.js
-// Updated API service with Skills and Blog endpoints
+// Updated src/services/api.js with authentication endpoints
 
 import axios from 'axios';
 
@@ -12,9 +11,13 @@ const API = axios.create({
   },
 });
 
-// Request interceptor for logging
+// Request interceptor to add auth token
 API.interceptors.request.use(
   (config) => {
+    const token = localStorage.getItem('cms_token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
     console.log(`🔄 API Request: ${config.method?.toUpperCase()} ${config.url}`);
     return config;
   },
@@ -32,15 +35,41 @@ API.interceptors.response.use(
   },
   (error) => {
     console.error('❌ API Response Error:', error.response?.data || error.message);
+
+    // Handle 401 errors (unauthorized)
+    if (error.response?.status === 401) {
+      localStorage.removeItem('cms_token');
+      // Only redirect if we're in the admin area
+      if (window.location.pathname.startsWith('/admin')) {
+        window.location.href = '/admin/login';
+      }
+    }
+
     return Promise.reject(error);
   }
 );
 
+// Authentication API endpoints
+export const authAPI = {
+  login: (credentials) => API.post('/auth/login', credentials),
+  logout: () => API.post('/auth/logout'),
+  getCurrentUser: () => API.get('/auth/me'),
+  updateProfile: (data) => API.put('/auth/profile', data),
+  changePassword: (data) => API.put('/auth/change-password', data)
+};
+
+// Dashboard API endpoints
+export const dashboardAPI = {
+  getStats: () => API.get('/dashboard/stats'),
+  getContentSummary: () => API.get('/dashboard/content-summary')
+};
+
 // Projects API endpoints
 export const projectsAPI = {
-  getAll: () => API.get('/projects'),
+  getAll: (params = {}) => API.get('/projects', { params }),
   getFeatured: () => API.get('/projects?featured=true'),
   getBySlug: (slug) => API.get(`/projects/${slug}`),
+  getById: (id) => API.get(`/projects/${id}`),
   create: (data) => API.post('/projects', data),
   update: (id, data) => API.put(`/projects/${id}`, data),
   delete: (id) => API.delete(`/projects/${id}`)
@@ -67,6 +96,7 @@ export const blogAPI = {
   getCategories: () => API.get('/blog/categories'),
   getTags: () => API.get('/blog/tags'),
   getBySlug: (slug) => API.get(`/blog/${slug}`),
+  getById: (id) => API.get(`/blog/${id}`),
   create: (data) => API.post('/blog', data),
   update: (id, data) => API.put(`/blog/${id}`, data),
   delete: (id) => API.delete(`/blog/${id}`)
