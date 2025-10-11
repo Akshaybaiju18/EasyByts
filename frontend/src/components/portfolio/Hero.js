@@ -3,31 +3,23 @@
 
 import React from 'react';
 
-const Hero = () => {
+const Hero = ({ profile }) => {
   return (
     <section className="hero">
-      <div className="hero-container">
-        <div className="hero-content">
-          <h1 className="hero-title">
-            Hi, I'm <span className="hero-name">Your Name</span>
-          </h1>
-          <h2 className="hero-subtitle">Full-Stack Developer</h2>
-          <p className="hero-description">
-            I build beautiful, responsive web applications using modern technologies 
-            like React, Node.js, and MongoDB. Welcome to my portfolio!
-          </p>
-          <div className="hero-buttons">
-            <a href="#projects" className="btn btn-primary">View My Work</a>
-            <a href="/contact" className="btn btn-secondary">Contact Me</a>
-          </div>
-        </div>
-        <div className="hero-image">
+      <div className="hero-content">
+        {profile?.profileImage && (
           <img 
-            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face" 
-            alt="Profile" 
+            src={`http://localhost:5000${profile.profileImage}`} 
+            alt={profile.fullName}
             className="profile-image"
           />
-        </div>
+        )}
+        <h1>{profile?.fullName || 'Your Name'}</h1>
+        <h2>{profile?.title || 'Your Title'}</h2>
+        <p>{profile?.tagline || 'Your tagline here'}</p>
+        {profile?.yearsOfExperience > 0 && (
+          <span>{profile.yearsOfExperience}+ years experience</span>
+        )}
       </div>
     </section>
   );

@@ -18,6 +18,8 @@ import Login from './components/admin/Login';
 import ProtectedRoute from './components/admin/ProtectedRoute';
 import DashboardLayout from './components/admin/DashboardLayout';
 import Dashboard from './components/admin/Dashboard';
+import ProfileSettings from './components/admin/ProfileSettings';
+import ContactMessages from './components/admin/ContactMessages';
 
 // Project management
 import ProjectList from './components/admin/ProjectList';
@@ -121,6 +123,9 @@ function App() {
               <Route path="blog" element={<BlogList />} />
               <Route path="blog/new" element={<BlogForm />} />
               <Route path="blog/edit/:id" element={<BlogForm isEdit={true} />} />
+
+              <Route path="profile" element={<ProfileSettings />} />
+              <Route path="messages" element={<ContactMessages />} />
             </Route>
 
             {/* 404 Route */}

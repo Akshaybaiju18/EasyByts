@@ -5,46 +5,334 @@ import Skills from '../components/portfolio/Skills';
 import About from '../components/portfolio/About';
 import BlogList from '../components/blog/BlogList';
 import { projectsAPI } from '../services/api-service';
+import API from '../services/api-service';
 
 const Home = () => {
   const [projects, setProjects] = useState([]);
+  const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [profileLoading, setProfileLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    fetchProfileData();
     fetchFeaturedProjects();
   }, []);
+
+  const fetchProfileData = async () => {
+    try {
+      setProfileLoading(true);
+      const response = await API.get('/profile');
+      setProfile(response.data.data);
+    } catch (err) {
+      setProfile({
+        firstName: 'Your',
+        lastName: 'Name',
+        title: 'Full Stack Developer',
+        tagline: 'Welcome to my portfolio',
+        aboutMe: 'This is where your about section will appear once you update your profile.',
+        email: 'your.email@example.com',
+        location: { city: 'Your City', country: 'Your Country' },
+        socialLinks: {},
+        profileImage: '',
+        isAvailable: true,
+        yearsOfExperience: 0
+      });
+    } finally {
+      setProfileLoading(false);
+    }
+  };
 
   const fetchFeaturedProjects = async () => {
     try {
       setLoading(true);
-      const response = await projectsAPI.getFeatured();
+      const response = await projectsAPI.getAll({
+        status: 'published',
+        featured: 'true'
+      });
       setProjects(response.data.data);
       setError(null);
     } catch (err) {
-      console.error('Error fetching projects:', err);
       setError('Failed to load projects');
     } finally {
       setLoading(false);
     }
   };
 
+  if (profileLoading) {
+    return (
+      <div className="home-page">
+        <div style={{
+          minHeight: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          background: '#f8f9fa'
+        }}>
+          <div style={{ textAlign: 'center' }}>
+            <div style={{
+              width: '50px',
+              height: '50px',
+              border: '3px solid #e9ecef',
+              borderTop: '3px solid #007bff',
+              borderRadius: '50%',
+              animation: 'spin 1s linear infinite',
+              margin: '0 auto 1rem'
+            }}></div>
+            <p style={{ color: '#6c757d' }}>Loading portfolio...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="home-page">
-      <Hero />
-      <About />
-      <Skills />
-      <Projects 
-        projects={projects} 
-        loading={loading} 
+      <Hero profile={profile} />
+      <About profile={profile} />
+      <Skills profile={profile} />
+      <Projects
+        projects={projects}
+        loading={loading}
         error={error}
         title="Featured Projects"
+        profile={profile}
       />
-      <BlogList 
-        featured={true} 
-        limit={3} 
-        title="Latest Blog Posts" 
+      <BlogList
+        featured={true}
+        limit={3}
+        title="Latest Blog Posts"
+        showAuthor={true}
+        profile={profile}
       />
+      {/* Contact Section with Profile Data */}
+      {profile && (
+        <section className="contact-preview" style={{
+          padding: '4rem 2rem',
+          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          color: 'white',
+          textAlign: 'center'
+        }}>
+          <div className="container" style={{ maxWidth: '800px', margin: '0 auto' }}>
+            <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>
+              Let's Work Together
+            </h2>
+            {profile.isAvailable && (
+              <div style={{
+                background: 'rgba(255, 255, 255, 0.2)',
+                padding: '1rem 2rem',
+                borderRadius: '25px',
+                display: 'inline-block',
+                marginBottom: '2rem'
+              }}>
+                <span style={{ fontSize: '1.1rem', fontWeight: '500' }}>
+                  ✅ {profile.availabilityMessage || 'Available for new opportunities'}
+                </span>
+              </div>
+            )}
+            <p style={{ fontSize: '1.2rem', marginBottom: '2rem', opacity: 0.9 }}>
+              {profile.shortBio || `Have a project in mind? Let's discuss how we can work together.`}
+            </p>
+            <div style={{
+              display: 'flex',
+              gap: '2rem',
+              justifyContent: 'center',
+              flexWrap: 'wrap',
+              marginBottom: '2rem'
+            }}>
+              {profile.email && (
+                <a
+                  href={`mailto:${profile.email}`}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    color: 'white',
+                    textDecoration: 'none',
+                    fontSize: '1.1rem',
+                    padding: '0.5rem 1rem',
+                    background: 'rgba(255, 255, 255, 0.2)',
+                    borderRadius: '20px',
+                    transition: 'background 0.3s ease'
+                  }}
+                  onMouseEnter={e => e.target.style.background = 'rgba(255, 255, 255, 0.3)'}
+                  onMouseLeave={e => e.target.style.background = 'rgba(255, 255, 255, 0.2)'}
+                >
+                  📧 {profile.email}
+                </a>
+              )}
+              {profile.phone && (
+                <a
+                  href={`tel:${profile.phone}`}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    color: 'white',
+                    textDecoration: 'none',
+                    fontSize: '1.1rem',
+                    padding: '0.5rem 1rem',
+                    background: 'rgba(255, 255, 255, 0.2)',
+                    borderRadius: '20px',
+                    transition: 'background 0.3s ease'
+                  }}
+                  onMouseEnter={e => e.target.style.background = 'rgba(255, 255, 255, 0.3)'}
+                  onMouseLeave={e => e.target.style.background = 'rgba(255, 255, 255, 0.2)'}
+                >
+                  📱 {profile.phone}
+                </a>
+              )}
+              {profile.formattedLocation && (
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  fontSize: '1.1rem',
+                  padding: '0.5rem 1rem',
+                  background: 'rgba(255, 255, 255, 0.2)',
+                  borderRadius: '20px'
+                }}>
+                  📍 {profile.formattedLocation}
+                </div>
+              )}
+            </div>
+            <div style={{
+              display: 'flex',
+              gap: '1rem',
+              justifyContent: 'center',
+              flexWrap: 'wrap'
+            }}>
+              {profile.socialLinks?.github && (
+                <a
+                  href={profile.socialLinks.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '50px',
+                    height: '50px',
+                    background: 'rgba(255, 255, 255, 0.2)',
+                    borderRadius: '50%',
+                    color: 'white',
+                    textDecoration: 'none',
+                    fontSize: '1.5rem',
+                    transition: 'background 0.3s ease'
+                  }}
+                  onMouseEnter={e => e.target.style.background = 'rgba(255, 255, 255, 0.3)'}
+                  onMouseLeave={e => e.target.style.background = 'rgba(255, 255, 255, 0.2)'}
+                >
+                  💻
+                </a>
+              )}
+              {profile.socialLinks?.linkedin && (
+                <a
+                  href={profile.socialLinks.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '50px',
+                    height: '50px',
+                    background: 'rgba(255, 255, 255, 0.2)',
+                    borderRadius: '50%',
+                    color: 'white',
+                    textDecoration: 'none',
+                    fontSize: '1.5rem',
+                    transition: 'background 0.3s ease'
+                  }}
+                  onMouseEnter={e => e.target.style.background = 'rgba(255, 255, 255, 0.3)'}
+                  onMouseLeave={e => e.target.style.background = 'rgba(255, 255, 255, 0.2)'}
+                >
+                  💼
+                </a>
+              )}
+              {profile.socialLinks?.twitter && (
+                <a
+                  href={profile.socialLinks.twitter}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '50px',
+                    height: '50px',
+                    background: 'rgba(255, 255, 255, 0.2)',
+                    borderRadius: '50%',
+                    color: 'white',
+                    textDecoration: 'none',
+                    fontSize: '1.5rem',
+                    transition: 'background 0.3s ease'
+                  }}
+                  onMouseEnter={e => e.target.style.background = 'rgba(255, 255, 255, 0.3)'}
+                  onMouseLeave={e => e.target.style.background = 'rgba(255, 255, 255, 0.2)'}
+                >
+                  🐦
+                </a>
+              )}
+              {profile.socialLinks?.website && (
+                <a
+                  href={profile.socialLinks.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '50px',
+                    height: '50px',
+                    background: 'rgba(255, 255, 255, 0.2)',
+                    borderRadius: '50%',
+                    color: 'white',
+                    textDecoration: 'none',
+                    fontSize: '1.5rem',
+                    transition: 'background 0.3s ease'
+                  }}
+                  onMouseEnter={e => e.target.style.background = 'rgba(255, 255, 255, 0.3)'}
+                  onMouseLeave={e => e.target.style.background = 'rgba(255, 255, 255, 0.2)'}
+                >
+                  🌐
+                </a>
+              )}
+            </div>
+            {profile.resumeUrl && (
+              <div style={{ marginTop: '2rem' }}>
+                <a
+                  href={`http://localhost:5000${profile.resumeUrl}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: 'inline-block',
+                    padding: '1rem 2rem',
+                    background: 'white',
+                    color: '#667eea',
+                    textDecoration: 'none',
+                    borderRadius: '30px',
+                    fontWeight: '600',
+                    fontSize: '1.1rem',
+                    boxShadow: '0 4px 15px rgba(0,0,0,0.2)',
+                    transition: 'transform 0.3s ease'
+                  }}
+                  onMouseEnter={e => e.target.style.transform = 'scale(1.05)'}
+                  onMouseLeave={e => e.target.style.transform = 'scale(1)'}
+                >
+                  📄 Download Resume
+                </a>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+      <style jsx>{`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `}</style>
     </div>
   );
 };
