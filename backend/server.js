@@ -19,7 +19,7 @@ const PORT = process.env.PORT || 5000;
 
 // ✅ FIXED: Configure CORS and helmet properly for static files
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: "https://portfolio-frontend1-3g2f.onrender.com",
   credentials: true
 }));
 
