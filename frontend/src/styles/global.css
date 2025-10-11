@@ -1,12 +1,14 @@
 /* src/styles/global.css */
 /* Global styles for Portfolio CMS */
 
+
 /* CSS Reset and Base Styles */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -17,6 +19,7 @@ body {
   line-height: 1.6;
   color: #333;
 }
+
 
 /* CSS Variables for Theming */
 :root {
@@ -29,15 +32,18 @@ body {
   --light-color: #f8f9fa;
   --dark-color: #343a40;
 
+
   --bg-color: #ffffff;
   --text-color: #333333;
   --border-color: #dee2e6;
   --shadow-color: rgba(0, 0, 0, 0.1);
 
+
   --max-width: 1200px;
   --border-radius: 8px;
   --transition: all 0.3s ease;
 }
+
 
 /* Container */
 .container {
@@ -45,6 +51,7 @@ body {
   margin: 0 auto;
   padding: 0 20px;
 }
+
 
 /* Header Styles */
 .header {
@@ -55,12 +62,14 @@ body {
   z-index: 1000;
 }
 
+
 .header-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 0;
 }
+
 
 .logo {
   text-decoration: none;
@@ -69,11 +78,13 @@ body {
   color: var(--primary-color);
 }
 
+
 .nav-list {
   display: flex;
   list-style: none;
   gap: 2rem;
 }
+
 
 .nav-link {
   text-decoration: none;
@@ -84,11 +95,13 @@ body {
   border-radius: var(--border-radius);
 }
 
+
 .nav-link:hover,
 .nav-link.active {
   color: var(--primary-color);
   background-color: rgba(0, 123, 255, 0.1);
 }
+
 
 /* Mobile Menu */
 .menu-toggle {
@@ -100,6 +113,7 @@ body {
   padding: 0.5rem;
 }
 
+
 .menu-toggle span {
   width: 25px;
   height: 3px;
@@ -108,6 +122,7 @@ body {
   transition: var(--transition);
 }
 
+
 /* Hero Section */
 .hero {
   padding: 4rem 0;
@@ -115,6 +130,7 @@ body {
   color: white;
   text-align: center;
 }
+
 
 .hero-container {
   display: grid;
@@ -126,20 +142,24 @@ body {
   padding: 0 20px;
 }
 
+
 .hero-title {
   font-size: 3rem;
   margin-bottom: 1rem;
 }
 
+
 .hero-name {
   color: #ffd700;
 }
+
 
 .hero-subtitle {
   font-size: 1.5rem;
   margin-bottom: 1rem;
   opacity: 0.9;
 }
+
 
 .hero-description {
   font-size: 1.1rem;
@@ -148,11 +168,13 @@ body {
   line-height: 1.6;
 }
 
+
 .hero-buttons {
   display: flex;
   gap: 1rem;
   justify-content: center;
 }
+
 
 .profile-image {
   width: 300px;
@@ -161,6 +183,7 @@ body {
   object-fit: cover;
   border: 5px solid rgba(255, 255, 255, 0.2);
 }
+
 
 /* Buttons */
 .btn {
@@ -176,15 +199,18 @@ body {
   font-size: 1rem;
 }
 
+
 .btn-primary {
   background-color: var(--primary-color);
   color: white;
 }
 
+
 .btn-primary:hover {
   background-color: #0056b3;
   transform: translateY(-2px);
 }
+
 
 .btn-secondary {
   background-color: transparent;
@@ -192,15 +218,18 @@ body {
   border: 2px solid white;
 }
 
+
 .btn-secondary:hover {
   background-color: white;
   color: var(--primary-color);
 }
 
+
 /* Projects Section */
 .projects {
   padding: 4rem 0;
 }
+
 
 .section-title {
   text-align: center;
@@ -209,11 +238,13 @@ body {
   color: var(--text-color);
 }
 
+
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
 }
+
 
 /* Project Card */
 .project-card {
@@ -224,21 +255,25 @@ body {
   transition: var(--transition);
 }
 
+
 .project-card:hover {
   transform: translateY(-10px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
+
 
 .project-image {
   height: 200px;
   overflow: hidden;
 }
 
+
 .project-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
+
 
 .placeholder-image {
   height: 100%;
@@ -249,9 +284,11 @@ body {
   font-size: 3rem;
 }
 
+
 .project-content {
   padding: 1.5rem;
 }
+
 
 .project-title {
   font-size: 1.3rem;
@@ -259,11 +296,13 @@ body {
   color: var(--text-color);
 }
 
+
 .project-description {
   color: var(--secondary-color);
   margin-bottom: 1rem;
   line-height: 1.5;
 }
+
 
 .project-technologies {
   display: flex;
@@ -271,6 +310,7 @@ body {
   gap: 0.5rem;
   margin-bottom: 1rem;
 }
+
 
 .tech-tag {
   background-color: var(--light-color);
@@ -281,10 +321,12 @@ body {
   font-weight: 500;
 }
 
+
 .project-links {
   display: flex;
   gap: 1rem;
 }
+
 
 .project-link {
   text-decoration: none;
@@ -295,23 +337,28 @@ body {
   font-size: 0.9rem;
 }
 
+
 .demo-link {
   background-color: var(--primary-color);
   color: white;
 }
 
+
 .demo-link:hover {
   background-color: #0056b3;
 }
+
 
 .github-link {
   background-color: var(--dark-color);
   color: white;
 }
 
+
 .github-link:hover {
   background-color: #23272b;
 }
+
 
 /* Loading and Error States */
 .loading {
@@ -321,6 +368,7 @@ body {
   color: var(--secondary-color);
 }
 
+
 .error {
   text-align: center;
   padding: 2rem;
@@ -328,12 +376,14 @@ body {
   font-size: 1.1rem;
 }
 
+
 .no-projects {
   text-align: center;
   color: var(--secondary-color);
   font-size: 1.1rem;
   grid-column: 1 / -1;
 }
+
 
 /* Footer */
 .footer {
@@ -344,41 +394,71 @@ body {
   margin-top: auto;
 }
 
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .nav-list {
     display: none;
   }
 
+
   .menu-toggle {
     display: flex;
   }
+
 
   .hero-container {
     grid-template-columns: 1fr;
     text-align: center;
   }
 
+
   .hero-title {
     font-size: 2rem;
   }
+
 
   .hero-buttons {
     flex-direction: column;
     align-items: center;
   }
 
+
   .profile-image {
     width: 200px;
     height: 200px;
   }
 
+
   .projects-grid {
     grid-template-columns: 1fr;
   }
 
+
   .project-links {
     flex-direction: column;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-title {
+    font-size: 1.75rem !important;
+  }
+  .hero-subtitle {
+    font-size: 1.2rem !important;
+  }
+  .hero-description {
+    font-size: 1rem !important;
+  }
+  .btn {
+    font-size: 0.9rem !important;
+    padding: 10px 20px !important;
+  }
+  .project-title {
+    font-size: 1.1rem !important;
+  }
+  .project-description {
+    font-size: 0.9rem !important;
   }
 }
 
@@ -387,13 +467,16 @@ body {
     padding: 0 15px;
   }
 
+
   .hero {
     padding: 2rem 0;
   }
 
+
   .projects {
     padding: 2rem 0;
   }
+
 
   .section-title {
     font-size: 2rem;
