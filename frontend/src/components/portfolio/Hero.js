@@ -2,249 +2,466 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-
 const Hero = ({ profile }) => {
   if (!profile) {
     return (
-      <section style={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        color: 'white',
-        padding: '2rem'
-      }}>
-        <div style={{ textAlign: 'center' }}>
-          <div style={{
-            width: '50px',
-            height: '50px',
-            border: '3px solid rgba(255,255,255,0.3)',
-            borderTop: '3px solid white',
-            borderRadius: '50%',
-            animation: 'spin 1s linear infinite',
-            margin: '0 auto 1rem'
-          }}></div>
-          <p>Loading...</p>
-        </div>
-      </section>
+      <>
+        <style>{heroStyles}</style>
+        <section className="hero hero-loading">
+          <div className="loading-container">
+            <div className="spinner"></div>
+            <p>Loading...</p>
+          </div>
+        </section>
+      </>
     );
   }
 
-
   return (
-    <section style={{
-      minHeight: '100vh',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-      color: 'white',
-      padding: '2rem',
-      position: 'relative'
-    }}>
-      <div style={{
-        maxWidth: '1200px',
-        width: '100%',
-        display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
-        gap: '4rem',
-        alignItems: 'center'
-      }}>
-        {/* Left Content */}
-        <div style={{ textAlign: 'left' }}>
-          <div style={{
-            fontSize: '1.2rem',
-            marginBottom: '1rem',
-            opacity: 0.9
-          }}>
-          </div>
-          
-          <h1 style={{
-            fontSize: '3.5rem',
-            fontWeight: '700',
-            marginBottom: '1rem',
-            lineHeight: '1.1'
-          }}>
-            {profile.firstName} {profile.lastName}
-          </h1>
-          
-          <h2 style={{
-            fontSize: '2rem',
-            fontWeight: '400',
-            marginBottom: '1.5rem',
-            opacity: 0.9
-          }}>
-            {profile.title}
-          </h2>
-          
-          {profile.tagline && (
-            <p style={{
-              fontSize: '1.3rem',
-              marginBottom: '2rem',
-              opacity: 0.8,
-              lineHeight: '1.6'
-            }}>
-              {profile.tagline}
-            </p>
-          )}
-          
-          <div style={{
-            display: 'flex',
-            gap: '1rem',
-            flexWrap: 'wrap'
-          }}>
-            <Link
-              to="/contact"
-              style={{
-                display: 'inline-block',
-                padding: '1rem 2rem',
-                background: 'white',
-                color: '#667eea',
-                textDecoration: 'none',
-                borderRadius: '30px',
-                fontWeight: '600',
-                fontSize: '1.1rem',
-                boxShadow: '0 4px 15px rgba(0,0,0,0.2)',
-                transition: 'transform 0.3s ease'
-              }}
-              onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
-              onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
-            >
-              Get In Touch
-            </Link>
+    <>
+      <style>{heroStyles}</style>
+      <section className="hero">
+        <div className="hero-container">
+          {/* Left Content */}
+          <div className="hero-content">
+            <h1 className="hero-title">
+              {profile.firstName} {profile.lastName}
+            </h1>
             
-            {profile.resumeUrl && (
-              <a
-                href={profile.resumeUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: 'inline-block',
-                  padding: '1rem 2rem',
-                  background: 'rgba(255,255,255,0.1)',
-                  color: 'white',
-                  textDecoration: 'none',
-                  borderRadius: '30px',
-                  fontWeight: '600',
-                  fontSize: '1.1rem',
-                  border: '2px solid rgba(255,255,255,0.3)',
-                  transition: 'all 0.3s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.background = 'rgba(255,255,255,0.2)';
-                  e.target.style.transform = 'scale(1.05)';
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.background = 'rgba(255,255,255,0.1)';
-                  e.target.style.transform = 'scale(1)';
-                }}
-              >
-                📄 Download Resume
-              </a>
-            )}
-          </div>
-        </div>
-
-
-        {/* Right Content - Profile Image */}
-        <div style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}>
-          <div style={{
-            position: 'relative',
-            width: '400px',
-            height: '400px'
-          }}>
-            {profile.profileImage ? (
-              <img
-                src={profile.profileImage}
-                alt={`${profile.firstName} ${profile.lastName}`}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  borderRadius: '50%',
-                  objectFit: 'cover',
-                  border: '8px solid rgba(255,255,255,0.2)',
-                  boxShadow: '0 20px 40px rgba(0,0,0,0.3)'
-                }}
-              />
-            ) : (
-              <div style={{
-                width: '100%',
-                height: '100%',
-                borderRadius: '50%',
-                background: 'rgba(255,255,255,0.1)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '8rem',
-                border: '8px solid rgba(255,255,255,0.2)',
-                boxShadow: '0 20px 40px rgba(0,0,0,0.3)'
-              }}>
-                👤
-              </div>
+            <h2 className="hero-subtitle">
+              {profile.title}
+            </h2>
+            
+            {profile.tagline && (
+              <p className="hero-description">
+                {profile.tagline}
+              </p>
             )}
             
-            {/* Decorative elements */}
-            <div style={{
-              position: 'absolute',
-              top: '-20px',
-              right: '-20px',
-              width: '80px',
-              height: '80px',
-              borderRadius: '50%',
-              background: 'rgba(255,255,255,0.1)',
-              animation: 'float 3s ease-in-out infinite'
-            }}></div>
-            
-            <div style={{
-              position: 'absolute',
-              bottom: '-10px',
-              left: '-30px',
-              width: '60px',
-              height: '60px',
-              borderRadius: '50%',
-              background: 'rgba(255,255,255,0.05)',
-              animation: 'float 2s ease-in-out infinite reverse'
-            }}></div>
+            <div className="hero-buttons">
+              <Link to="/contact" className="hero-btn hero-btn-primary">
+                Get In Touch
+              </Link>
+              
+              {profile.resumeUrl && (
+                <a
+                  href={profile.resumeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hero-btn hero-btn-secondary"
+                >
+                  📄 Download Resume
+                </a>
+              )}
+            </div>
+          </div>
+
+          {/* Right Content - Profile Image */}
+          <div className="hero-image-wrapper">
+            <div className="hero-image-container">
+              {profile.profileImage ? (
+                <img
+                  src={profile.profileImage}
+                  alt={`${profile.firstName} ${profile.lastName}`}
+                  className="profile-image"
+                />
+              ) : (
+                <div className="profile-image-placeholder">
+                  👤
+                </div>
+              )}
+              
+              {/* Decorative elements */}
+              <div className="decorative-circle decorative-circle-1"></div>
+              <div className="decorative-circle decorative-circle-2"></div>
+            </div>
           </div>
         </div>
-      </div>
-
-
-      <style>{`
-        @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-20px); }
-        }
-        @media (max-width: 768px) {
-          .hero-grid {
-            grid-template-columns: 1fr !important;
-            text-align: center !important;
-            gap: 2rem !important;
-          }
-          .hero-image {
-            width: 300px !important;
-            height: 300px !important;
-          }
-          .hero-title {
-            font-size: 2.5rem !important;
-          }
-          .hero-subtitle {
-            font-size: 1.5rem !important;
-          }
-        }
-      `}</style>
-    </section>
+      </section>
+    </>
   );
 };
 
+const heroStyles = `
+  /* Hero Section */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-loading {
+    text-align: center;
+  }
+
+  .loading-container {
+    text-align: center;
+  }
+
+  .spinner {
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top: 3px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+  }
+
+  /* Hero Container */
+  .hero-container {
+    max-width: 1200px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    padding: 0 20px;
+  }
+
+  /* Hero Content (Left Side) */
+  .hero-content {
+    text-align: left;
+  }
+
+  .hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1.1;
+    word-wrap: break-word;
+  }
+
+  .hero-subtitle {
+    font-size: 2rem;
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+    opacity: 0.9;
+  }
+
+  .hero-description {
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    opacity: 0.8;
+    line-height: 1.6;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  /* Buttons */
+  .hero-btn {
+    display: inline-block;
+    padding: 1rem 2rem;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+  }
+
+  .hero-btn-primary {
+    background: white;
+    color: #667eea;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .hero-btn-primary:hover {
+    transform: scale(1.05);
+  }
+
+  .hero-btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .hero-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+  }
+
+  /* Hero Image (Right Side) */
+  .hero-image-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hero-image-container {
+    position: relative;
+    width: 400px;
+    height: 400px;
+  }
+
+  .profile-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 8px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    display: block;
+  }
+
+  .profile-image-placeholder {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8rem;
+    border: 8px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Decorative Circles */
+  .decorative-circle {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .decorative-circle-1 {
+    top: -20px;
+    right: -20px;
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.1);
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .decorative-circle-2 {
+    bottom: -10px;
+    left: -30px;
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.05);
+    animation: float 2s ease-in-out infinite reverse;
+  }
+
+  /* Animations */
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+
+  /* ============================================
+     RESPONSIVE DESIGN
+     ============================================ */
+
+  /* Tablet and below (768px) */
+  @media screen and (max-width: 768px) {
+    .hero {
+      padding: 2rem 1rem;
+      min-height: auto;
+    }
+
+    .hero-container {
+      grid-template-columns: 1fr !important;
+      gap: 2rem;
+      padding: 0 15px;
+    }
+
+    .hero-content {
+      text-align: center;
+      order: 2;
+    }
+
+    .hero-image-wrapper {
+      order: 1;
+    }
+
+    .hero-title {
+      font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.5rem;
+    }
+
+    .hero-description {
+      font-size: 1.1rem;
+    }
+
+    .hero-buttons {
+      justify-content: center;
+    }
+
+    .hero-image-container {
+      width: 300px;
+      height: 300px;
+      margin: 0 auto;
+    }
+
+    .decorative-circle-1 {
+      width: 60px;
+      height: 60px;
+      top: -10px;
+      right: -10px;
+    }
+
+    .decorative-circle-2 {
+      width: 50px;
+      height: 50px;
+      bottom: -5px;
+      left: -15px;
+    }
+  }
+
+  /* Mobile Large (600px and below) */
+  @media screen and (max-width: 600px) {
+    .hero {
+      padding: 1.5rem 0.75rem;
+    }
+
+    .hero-container {
+      gap: 1.5rem;
+      padding: 0 12px;
+    }
+
+    .hero-title {
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero-description {
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-buttons {
+      flex-direction: column;
+      gap: 0.75rem;
+      width: 100%;
+    }
+
+    .hero-btn {
+      width: 100%;
+      max-width: 280px;
+      padding: 0.85rem 1.5rem;
+      font-size: 1rem;
+    }
+
+    .hero-image-container {
+      width: 250px;
+      height: 250px;
+    }
+
+    .profile-image-placeholder {
+      font-size: 6rem;
+    }
+  }
+
+  /* Mobile Small (480px and below) */
+  @media screen and (max-width: 480px) {
+    .hero {
+      padding: 1.25rem 0.5rem;
+    }
+
+    .hero-container {
+      gap: 1.25rem;
+      padding: 0 10px;
+    }
+
+    .hero-title {
+      font-size: 1.75rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .hero-description {
+      font-size: 0.95rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-btn {
+      max-width: 240px;
+      padding: 0.75rem 1.25rem;
+      font-size: 0.95rem;
+    }
+
+    .hero-image-container {
+      width: 220px;
+      height: 220px;
+    }
+
+    .profile-image,
+    .profile-image-placeholder {
+      border-width: 6px;
+    }
+
+    .profile-image-placeholder {
+      font-size: 5rem;
+    }
+
+    .decorative-circle-1 {
+      width: 50px;
+      height: 50px;
+    }
+
+    .decorative-circle-2 {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  /* Mobile Extra Small (360px and below) */
+  @media screen and (max-width: 360px) {
+    .hero-title {
+      font-size: 1.5rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1rem;
+    }
+
+    .hero-description {
+      font-size: 0.9rem;
+    }
+
+    .hero-btn {
+      font-size: 0.9rem;
+      padding: 0.7rem 1rem;
+    }
+
+    .hero-image-container {
+      width: 200px;
+      height: 200px;
+    }
+
+    .profile-image-placeholder {
+      font-size: 4.5rem;
+    }
+  }
+`;
 
 export default Hero;

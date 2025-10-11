@@ -1,0 +1,753 @@
+/* ============================================
+   ADMIN DASHBOARD - MOBILE RESPONSIVE STYLES
+   ============================================
+   
+   This CSS file makes ONLY the admin components mobile-friendly
+   It won't affect your public-facing pages (Home, Projects, etc.)
+   
+   Import in App.js AFTER global.css:
+   import './styles/global.css';
+   import './styles/admin-responsive.css';
+*/
+
+/* ============================================
+   ADMIN-SPECIFIC SCOPING
+   All styles target .dashboard-layout to avoid conflicts
+   ============================================ */
+
+/* ============================================
+   DASHBOARD LAYOUT (DashboardLayout.js)
+   ============================================ */
+
+@media (max-width: 768px) {
+  /* Mobile sidebar - fixed overlay */
+  .dashboard-layout {
+    position: relative;
+  }
+
+  /* Sidebar styling */
+  .dashboard-layout > div:first-child {
+    position: fixed !important;
+    height: 100vh;
+    z-index: 1001;
+    top: 0;
+    left: 0;
+    transition: transform 0.3s ease;
+  }
+
+  /* Main content takes full width */
+  .dashboard-layout > div:last-child {
+    margin-left: 0 !important;
+    width: 100%;
+  }
+
+  /* Top header bar */
+  .dashboard-layout header {
+    padding: 0.75rem 1rem !important;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .dashboard-layout header > div:first-child h1 {
+    font-size: 1.25rem !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  .dashboard-layout header > div:first-child p {
+    font-size: 0.85rem !important;
+  }
+
+  /* Quick actions in header */
+  .dashboard-layout header > div:last-child {
+    width: 100%;
+    justify-content: space-between !important;
+    flex-wrap: wrap;
+  }
+
+  .dashboard-layout header a[href*="admin/messages"] {
+    width: 100%;
+    justify-content: center !important;
+  }
+
+  .dashboard-layout header a,
+  .dashboard-layout header button {
+    font-size: 0.85rem !important;
+    padding: 0.4rem 0.8rem !important;
+  }
+
+  /* Profile avatar in header */
+  .dashboard-layout header a[href*="admin/profile"] > div {
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  /* Main content area */
+  .dashboard-layout main {
+    padding: 1rem !important;
+  }
+}
+
+/* Small mobile adjustments */
+@media (max-width: 480px) {
+  .dashboard-layout header {
+    padding: 0.5rem !important;
+  }
+
+  .dashboard-layout main {
+    padding: 0.75rem !important;
+  }
+}
+
+/* ============================================
+   DASHBOARD PAGE (Dashboard.js)
+   ============================================ */
+
+@media (max-width: 768px) {
+  /* Welcome section */
+  .dashboard-layout main > div:first-child {
+    padding: 1.25rem !important;
+  }
+
+  .dashboard-layout main > div:first-child h2 {
+    font-size: 1.35rem !important;
+  }
+
+  /* Stats grid - 2 columns */
+  .dashboard-layout main > div:nth-child(2) {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1rem !important;
+  }
+
+  /* Stat cards */
+  .dashboard-layout main > div:nth-child(2) > div {
+    padding: 1rem !important;
+  }
+
+  .dashboard-layout main > div:nth-child(2) > div > div:nth-child(1) {
+    font-size: 1.5rem !important;
+  }
+
+  .dashboard-layout main > div:nth-child(2) > div > div:nth-child(2) {
+    font-size: 1.5rem !important;
+  }
+
+  /* Quick actions */
+  .dashboard-layout main > div:nth-child(3) > div {
+    grid-template-columns: 1fr !important;
+    gap: 0.75rem !important;
+  }
+
+  /* Recent activity sections */
+  .dashboard-layout main > div:last-child {
+    grid-template-columns: 1fr !important;
+    gap: 1.25rem !important;
+  }
+
+  .dashboard-layout main > div:last-child > div {
+    padding: 1.25rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Stats grid - single column on very small screens */
+  .dashboard-layout main > div:nth-child(2) {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ============================================
+   PROJECT LIST (ProjectList.js)
+   ============================================ */
+
+@media (max-width: 768px) {
+  /* Header with title and button */
+  .dashboard-layout main > div:first-child {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 1rem;
+  }
+
+  .dashboard-layout main > div:first-child h2 {
+    text-align: center;
+    font-size: 1.35rem !important;
+  }
+
+  .dashboard-layout main > div:first-child a {
+    text-align: center;
+    width: 100%;
+  }
+
+  /* Table wrapper - make scrollable */
+  .dashboard-layout main > div:nth-child(2) {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Table responsive */
+  .dashboard-layout main table {
+    min-width: 800px;
+    font-size: 0.85rem;
+  }
+
+  .dashboard-layout main table th,
+  .dashboard-layout main table td {
+    padding: 0.6rem !important;
+  }
+
+  /* Action buttons in table */
+  .dashboard-layout main table td:last-child > div {
+    flex-wrap: nowrap !important;
+    gap: 0.35rem !important;
+  }
+
+  .dashboard-layout main table td:last-child a,
+  .dashboard-layout main table td:last-child button {
+    font-size: 0.75rem !important;
+    padding: 0.35rem 0.6rem !important;
+    white-space: nowrap;
+  }
+}
+
+/* ============================================
+   PROJECT FORM (ProjectForm.js)
+   ============================================ */
+
+@media (max-width: 768px) {
+  /* Form header */
+  .dashboard-layout form + div > div:first-child,
+  .dashboard-layout main > div:first-child {
+    flex-direction: column !important;
+    gap: 1rem;
+  }
+
+  /* Form container */
+  .dashboard-layout form {
+    padding: 1.25rem !important;
+  }
+
+  /* Form grid - single column */
+  .dashboard-layout form > div:first-child {
+    grid-template-columns: 1fr !important;
+    gap: 1.25rem !important;
+  }
+
+  /* All form fields */
+  .dashboard-layout form input,
+  .dashboard-layout form textarea,
+  .dashboard-layout form select {
+    font-size: 16px !important; /* Prevents iOS zoom */
+  }
+
+  /* Submit buttons */
+  .dashboard-layout form > div:last-child {
+    flex-direction: column-reverse !important;
+    gap: 0.75rem !important;
+  }
+
+  .dashboard-layout form > div:last-child button {
+    width: 100% !important;
+  }
+}
+
+/* ============================================
+   BLOG LIST (BlogList.js)
+   ============================================ */
+
+@media (max-width: 768px) {
+  /* Header */
+  .dashboard-layout main > div:first-child {
+    flex-direction: column !important;
+    gap: 1rem;
+  }
+
+  .dashboard-layout main > div:first-child h2 {
+    text-align: center;
+    font-size: 1.35rem !important;
+  }
+
+  /* Filter tabs - horizontal scroll */
+  .dashboard-layout main > div:nth-child(2) {
+    margin-bottom: 1.25rem !important;
+    padding: 0.75rem !important;
+  }
+
+  .dashboard-layout main > div:nth-child(2) > div {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.5rem;
+  }
+
+  .dashboard-layout main > div:nth-child(2) > div > div {
+    flex-wrap: nowrap !important;
+    min-width: max-content;
+  }
+
+  .dashboard-layout main > div:nth-child(2) button {
+    white-space: nowrap;
+    font-size: 0.85rem !important;
+    padding: 0.4rem 0.8rem !important;
+  }
+
+  /* Blog grid - single column */
+  .dashboard-layout main > div:nth-child(3) {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+
+  /* Blog card image */
+  .dashboard-layout main > div:nth-child(3) > div > div:first-child {
+    height: 180px !important;
+  }
+
+  /* Blog card content */
+  .dashboard-layout main > div:nth-child(3) > div > div:last-child {
+    padding: 1.25rem !important;
+  }
+
+  /* Stats section in card */
+  .dashboard-layout main > div:nth-child(3) > div > div:last-child > div:nth-child(4) {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.5rem !important;
+  }
+
+  /* Action buttons in card */
+  .dashboard-layout main > div:nth-child(3) > div > div:last-child > div:last-child {
+    flex-wrap: wrap !important;
+  }
+
+  .dashboard-layout main > div:nth-child(3) > div > div:last-child > div:last-child a,
+  .dashboard-layout main > div:nth-child(3) > div > div:last-child > div:last-child button {
+    font-size: 0.85rem !important;
+    padding: 0.5rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Action buttons full width */
+  .dashboard-layout main > div:nth-child(3) > div > div:last-child > div:last-child {
+    flex-direction: column !important;
+  }
+
+  .dashboard-layout main > div:nth-child(3) > div > div:last-child > div:last-child a,
+  .dashboard-layout main > div:nth-child(3) > div > div:last-child > div:last-child button {
+    width: 100% !important;
+  }
+}
+
+/* ============================================
+   BLOG FORM (BlogForm.js)
+   ============================================ */
+
+@media (max-width: 1024px) {
+  /* Form changes to single column */
+  .dashboard-layout form[style*="2fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Main content section */
+  .dashboard-layout form > div:first-child {
+    padding: 1.25rem !important;
+  }
+
+  /* Sidebar sections */
+  .dashboard-layout form > div:last-child {
+    gap: 1rem !important;
+  }
+
+  .dashboard-layout form > div:last-child > div {
+    padding: 1.25rem !important;
+  }
+
+  /* Textarea */
+  .dashboard-layout form textarea {
+    font-size: 0.9rem !important;
+    line-height: 1.5 !important;
+  }
+
+  /* Category grid in sidebar */
+  .dashboard-layout form > div:last-child > div > div > div {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ============================================
+   SKILLS LIST (SkillsList.js)
+   ============================================ */
+
+@media (max-width: 768px) {
+  /* Header */
+  .dashboard-layout main > div:first-child {
+    flex-direction: column !important;
+    gap: 1rem;
+  }
+
+  .dashboard-layout main > div:first-child h2 {
+    text-align: center;
+    font-size: 1.35rem !important;
+  }
+
+  /* Category filter - horizontal scroll */
+  .dashboard-layout main > div:nth-child(2) {
+    padding: 0.75rem !important;
+  }
+
+  .dashboard-layout main > div:nth-child(2) > div:last-child {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.5rem;
+  }
+
+  .dashboard-layout main > div:nth-child(2) > div:last-child > div {
+    flex-wrap: nowrap !important;
+    min-width: max-content;
+  }
+
+  .dashboard-layout main > div:nth-child(2) button {
+    white-space: nowrap;
+    font-size: 0.85rem !important;
+    padding: 0.4rem 0.8rem !important;
+  }
+
+  /* Skills grid - single column */
+  .dashboard-layout main > div:last-child {
+    grid-template-columns: 1fr !important;
+    gap: 1.25rem !important;
+  }
+
+  /* Skill card */
+  .dashboard-layout main > div:last-child > div {
+    padding: 1.25rem !important;
+  }
+}
+
+/* ============================================
+   SKILLS FORM (SkillsForm.js)
+   ============================================ */
+
+@media (max-width: 768px) {
+  /* Form grid - single column */
+  .dashboard-layout form > div:first-child {
+    grid-template-columns: 1fr !important;
+    gap: 1.25rem !important;
+  }
+
+  /* Preview section */
+  .dashboard-layout form > div:nth-child(2) {
+    padding: 1rem !important;
+  }
+
+  .dashboard-layout form > div:nth-child(2) > div:last-child {
+    padding: 1rem !important;
+  }
+
+  /* Submit buttons */
+  .dashboard-layout form > div:last-child {
+    flex-direction: column-reverse !important;
+    gap: 0.75rem !important;
+  }
+
+  .dashboard-layout form > div:last-child button {
+    width: 100% !important;
+  }
+}
+
+/* ============================================
+   CONTACT MESSAGES (ContactMessages.js)
+   ============================================ */
+
+@media (max-width: 1024px) {
+  /* Messages layout stacks */
+  .dashboard-layout main > div:nth-child(3) {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Message detail below list */
+  .dashboard-layout main > div:nth-child(3) > div:last-child {
+    max-height: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Header */
+  .dashboard-layout main > div:first-child h2 {
+    font-size: 1.35rem !important;
+  }
+
+  /* Filter buttons */
+  .dashboard-layout main > div:nth-child(2) {
+    flex-wrap: wrap;
+    gap: 0.75rem !important;
+  }
+
+  .dashboard-layout main > div:nth-child(2) button {
+    flex: 1 1 auto;
+    min-width: 90px;
+    font-size: 0.85rem !important;
+    padding: 0.4rem 0.8rem !important;
+  }
+
+  /* Message list container */
+  .dashboard-layout main > div:nth-child(3) > div:first-child {
+    max-height: 400px !important;
+  }
+
+  /* Message items */
+  .dashboard-layout main > div:nth-child(3) > div:first-child > div {
+    padding: 0.75rem !important;
+  }
+
+  /* Message detail */
+  .dashboard-layout main > div:nth-child(3) > div:last-child {
+    padding: 1rem !important;
+  }
+
+  /* Action buttons in detail */
+  .dashboard-layout main > div:nth-child(3) > div:last-child > div > div:first-child {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  .dashboard-layout main > div:nth-child(3) > div:last-child > div > div:first-child > div:last-child {
+    width: 100%;
+    flex-direction: column;
+    gap: 0.5rem !important;
+  }
+
+  .dashboard-layout main > div:nth-child(3) > div:last-child button {
+    width: 100% !important;
+  }
+}
+
+/* ============================================
+   PROFILE SETTINGS (ProfileSettings.js)
+   ============================================ */
+
+@media (max-width: 768px) {
+  /* Page header */
+  .dashboard-layout main > div:first-child h2 {
+    font-size: 1.35rem !important;
+  }
+
+  /* Tabs - horizontal scroll */
+  .dashboard-layout main > div:nth-child(2) {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 1.5rem !important;
+  }
+
+  .dashboard-layout main > div:nth-child(2) > div {
+    flex-wrap: nowrap;
+    min-width: max-content;
+  }
+
+  .dashboard-layout main > div:nth-child(2) button {
+    white-space: nowrap;
+    font-size: 0.9rem !important;
+    padding: 0.75rem 0 !important;
+  }
+
+  /* Form container */
+  .dashboard-layout form > div {
+    padding: 1.25rem !important;
+  }
+
+  /* Profile image section */
+  .dashboard-layout form > div > div:first-child {
+    flex-direction: column !important;
+    text-align: center;
+    gap: 1.25rem !important;
+  }
+
+  .dashboard-layout form > div > div:first-child > div:first-child {
+    margin: 0 auto;
+  }
+
+  /* Form grids - single column */
+  .dashboard-layout form > div > div[style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+    gap: 1.25rem !important;
+  }
+
+  /* Input fields */
+  .dashboard-layout form input,
+  .dashboard-layout form textarea,
+  .dashboard-layout form select {
+    font-size: 16px !important;
+  }
+
+  /* Submit section */
+  .dashboard-layout form > div:last-child {
+    padding: 1.25rem !important;
+  }
+
+  .dashboard-layout form > div:last-child button {
+    padding: 0.75rem 1.5rem !important;
+    font-size: 1rem !important;
+  }
+}
+
+/* ============================================
+   LOGIN PAGE (Login.js)
+   ============================================ */
+
+@media (max-width: 768px) {
+  /* Login container */
+  div[style*="minHeight: '100vh'"] > div {
+    padding: 2rem !important;
+    margin: 1rem;
+    max-width: calc(100% - 2rem) !important;
+  }
+
+  div[style*="minHeight: '100vh'"] h1 {
+    font-size: 1.5rem !important;
+  }
+
+  div[style*="minHeight: '100vh'"] input {
+    font-size: 16px !important;
+  }
+}
+
+/* ============================================
+   GENERAL ADMIN UTILITIES
+   ============================================ */
+
+@media (max-width: 768px) {
+  /* All buttons touch-friendly */
+  .dashboard-layout button,
+  .dashboard-layout a {
+    min-height: 40px;
+    touch-action: manipulation;
+  }
+
+  /* Prevent zoom on inputs (iOS) */
+  .dashboard-layout input,
+  .dashboard-layout textarea,
+  .dashboard-layout select {
+    font-size: 16px !important;
+  }
+
+  /* Better spacing */
+  .dashboard-layout h2 {
+    margin-bottom: 1rem !important;
+  }
+
+  .dashboard-layout h3 {
+    font-size: 1.1rem !important;
+  }
+
+  /* Images responsive */
+  .dashboard-layout img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Reduced padding globally */
+  .dashboard-layout [style*="padding: '2rem'"] {
+    padding: 1.25rem !important;
+  }
+
+  .dashboard-layout [style*="padding: '1.5rem'"] {
+    padding: 1rem !important;
+  }
+
+  /* Reduced gaps */
+  .dashboard-layout [style*="gap: '2rem'"] {
+    gap: 1.25rem !important;
+  }
+
+  .dashboard-layout [style*="gap: '1.5rem'"] {
+    gap: 1rem !important;
+  }
+}
+
+/* ============================================
+   SMALL MOBILE OPTIMIZATIONS
+   ============================================ */
+
+@media (max-width: 480px) {
+  .dashboard-layout h2 {
+    font-size: 1.2rem !important;
+  }
+
+  .dashboard-layout h3 {
+    font-size: 1rem !important;
+  }
+
+  .dashboard-layout [style*="padding: '1.25rem'"] {
+    padding: 1rem !important;
+  }
+
+  .dashboard-layout [style*="gap: '1.25rem'"] {
+    gap: 0.75rem !important;
+  }
+}
+
+/* ============================================
+   LANDSCAPE MODE (MOBILE)
+   ============================================ */
+
+@media (max-width: 768px) and (orientation: landscape) {
+  .dashboard-layout main {
+    padding: 0.75rem !important;
+  }
+
+  .dashboard-layout h1,
+  .dashboard-layout h2 {
+    font-size: 1.15rem !important;
+    margin: 0.5rem 0 !important;
+  }
+
+  .dashboard-layout [style*="padding: '1.25rem'"] {
+    padding: 0.75rem !important;
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+/* Focus visible for keyboard navigation */
+.dashboard-layout button:focus-visible,
+.dashboard-layout a:focus-visible,
+.dashboard-layout input:focus-visible,
+.dashboard-layout textarea:focus-visible,
+.dashboard-layout select:focus-visible {
+  outline: 3px solid var(--primary-color, #007bff) !important;
+  outline-offset: 2px !important;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-layout * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+
+@media print {
+  .dashboard-layout > div:first-child,
+  .dashboard-layout header,
+  .dashboard-layout button,
+  .dashboard-layout a[href*="edit"],
+  .dashboard-layout a[href*="delete"],
+  .dashboard-layout a[href*="new"] {
+    display: none !important;
+  }
+
+  .dashboard-layout > div:last-child {
+    margin: 0 !important;
+    width: 100% !important;
+  }
+
+  .dashboard-layout * {
+    box-shadow: none !important;
+  }
+}

@@ -97,7 +97,7 @@ const DashboardLayout = () => {
   };
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', background: '#f8f9fa' }}>
+    <div className="dashboard-layout" style={{ display: 'flex', minHeight: '100vh', background: '#f8f9fa' }}>
       {/* Sidebar */}
       <div style={{
         width: sidebarOpen ? '280px' : '70px',

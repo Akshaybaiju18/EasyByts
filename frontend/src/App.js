@@ -34,6 +34,7 @@ import BlogList from './components/admin/BlogList';
 import BlogForm from './components/admin/BlogForm';
 
 import './styles/global.css';
+import './styles/admin-responsive.css';
 
 // Add CSS for loading animation
 const loadingStyles = `
