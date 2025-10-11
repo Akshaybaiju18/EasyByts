@@ -1,5 +1,5 @@
 // src/components/admin/ProfileSettings.js
-
+// FIXED VERSION - with Cloudinary support
 
 import React, { useState, useEffect } from 'react';
 import API from '../../services/api-service';
@@ -216,8 +216,7 @@ const ProfileSettings = () => {
           {[
             { key: 'personal', label: '👤 Personal Info' },
             { key: 'contact', label: '📞 Contact & Social' },
-            { key: 'about', label: '📝 About & Bio' },
-            { key: 'settings', label: '⚙️ Settings' }
+            { key: 'about', label: '📝 About & Bio' }
           ].map(tab => (
             <button
               key={tab.key}
@@ -261,7 +260,7 @@ const ProfileSettings = () => {
               <div>
                 {profile.profileImage ? (
                   <img
-                    src={`http://localhost:5000${profile.profileImage}`}
+                    src={profile.profileImage}
                     alt="Profile"
                     style={{
                       width: '100px',
@@ -759,7 +758,7 @@ const ProfileSettings = () => {
               {profile.resumeUrl && (
                 <div style={{ marginBottom: '1rem' }}>
                   <a
-                    href={`http://localhost:5000${profile.resumeUrl}`}
+                    href={profile.resumeUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{
@@ -795,78 +794,6 @@ const ProfileSettings = () => {
               <p style={{ fontSize: '0.8rem', color: '#6c757d', margin: '0.5rem 0 0 0' }}>
                 Supported formats: PDF, DOC, DOCX (max 10MB)
               </p>
-            </div>
-          </div>
-        )}
-
-        {/* Settings Tab */}
-        {activeTab === 'settings' && (
-          <div style={{
-            background: 'white',
-            padding: '2rem',
-            borderRadius: '8px',
-            boxShadow: '0 2px 10px rgba(0,0,0,0.1)'
-          }}>
-            <div style={{ marginBottom: '2rem' }}>
-              <h4 style={{ marginBottom: '1rem' }}>Availability Status</h4>
-              <div style={{ marginBottom: '1rem' }}>
-                <label style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                  cursor: 'pointer'
-                }}>
-                  <input
-                    type="checkbox"
-                    name="isAvailable"
-                    checked={profile.isAvailable}
-                    onChange={handleChange}
-                    style={{ transform: 'scale(1.2)' }}
-                  />
-                  <span style={{ fontWeight: '500' }}>Available for work</span>
-                </label>
-              </div>
-              <div>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>
-                  Availability Message
-                </label>
-                <input
-                  type="text"
-                  name="availabilityMessage"
-                  value={profile.availabilityMessage}
-                  onChange={handleChange}
-                  style={{
-                    width: '100%',
-                    padding: '0.75rem',
-                    border: '2px solid #e9ecef',
-                    borderRadius: '4px',
-                    fontSize: '1rem',
-                    boxSizing: 'border-box'
-                  }}
-                  placeholder="e.g., Available for freelance projects"
-                />
-              </div>
-            </div>
-
-            <div>
-              <h4 style={{ marginBottom: '1rem' }}>Privacy Settings</h4>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <label style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                  cursor: 'pointer'
-                }}>
-                  <input
-                    type="checkbox"
-                    name="showContactInfo"
-                    checked={profile.showContactInfo}
-                    onChange={handleChange}
-                    style={{ transform: 'scale(1.2)' }}
-                  />
-                  <span style={{ fontWeight: '500' }}>Show contact information publicly</span>
-                </label>
-              </div>
             </div>
           </div>
         )}

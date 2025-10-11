@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="container">
-        <p>&copy; 2024 Your Portfolio. Built with React & Node.js</p>
+        <p>&copy; Portfolio CMS . Built with React and Nodejs. 2025</p>
       </div>
     </footer>
   );

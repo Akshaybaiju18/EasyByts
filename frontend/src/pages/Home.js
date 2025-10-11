@@ -46,9 +46,9 @@ const Home = () => {
   const fetchFeaturedProjects = async () => {
     try {
       setLoading(true);
-      const response = await projectsAPI.getAll({
-        status: 'published',
-        featured: 'true'
+      const response = await projectsAPI.getAll({ 
+        status: 'published', 
+        featured: 'true' 
       });
       setProjects(response.data.data);
       setError(null);
@@ -105,41 +105,61 @@ const Home = () => {
         showAuthor={true}
         profile={profile}
       />
+
       {/* Contact Section with Profile Data */}
       {profile && (
-        <section className="contact-preview" style={{
-          padding: '4rem 2rem',
-          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-          color: 'white',
-          textAlign: 'center'
-        }}>
-          <div className="container" style={{ maxWidth: '800px', margin: '0 auto' }}>
+        <section
+          className="contact-preview"
+          style={{
+            padding: '4rem 2rem',
+            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            color: 'white',
+            textAlign: 'center'
+          }}
+        >
+          <div
+            className="container"
+            style={{ maxWidth: '800px', margin: '0 auto' }}
+          >
             <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>
               Let's Work Together
             </h2>
+
             {profile.isAvailable && (
-              <div style={{
-                background: 'rgba(255, 255, 255, 0.2)',
-                padding: '1rem 2rem',
-                borderRadius: '25px',
-                display: 'inline-block',
-                marginBottom: '2rem'
-              }}>
+              <div
+                style={{
+                  background: 'rgba(255, 255, 255, 0.2)',
+                  padding: '1rem 2rem',
+                  borderRadius: '25px',
+                  display: 'inline-block',
+                  marginBottom: '2rem'
+                }}
+              >
                 <span style={{ fontSize: '1.1rem', fontWeight: '500' }}>
                   ✅ {profile.availabilityMessage || 'Available for new opportunities'}
                 </span>
               </div>
             )}
-            <p style={{ fontSize: '1.2rem', marginBottom: '2rem', opacity: 0.9 }}>
+
+            <p
+              style={{
+                fontSize: '1.2rem',
+                marginBottom: '2rem',
+                opacity: 0.9
+              }}
+            >
               {profile.shortBio || `Have a project in mind? Let's discuss how we can work together.`}
             </p>
-            <div style={{
-              display: 'flex',
-              gap: '2rem',
-              justifyContent: 'center',
-              flexWrap: 'wrap',
-              marginBottom: '2rem'
-            }}>
+
+            <div
+              style={{
+                display: 'flex',
+                gap: '2rem',
+                justifyContent: 'center',
+                flexWrap: 'wrap',
+                marginBottom: '2rem'
+              }}
+            >
               {profile.email && (
                 <a
                   href={`mailto:${profile.email}`}
@@ -155,12 +175,13 @@ const Home = () => {
                     borderRadius: '20px',
                     transition: 'background 0.3s ease'
                   }}
-                  onMouseEnter={e => e.target.style.background = 'rgba(255, 255, 255, 0.3)'}
-                  onMouseLeave={e => e.target.style.background = 'rgba(255, 255, 255, 0.2)'}
+                  onMouseEnter={e => (e.target.style.background = 'rgba(255, 255, 255, 0.3)')}
+                  onMouseLeave={e => (e.target.style.background = 'rgba(255, 255, 255, 0.2)')}
                 >
                   📧 {profile.email}
                 </a>
               )}
+
               {profile.phone && (
                 <a
                   href={`tel:${profile.phone}`}
@@ -176,32 +197,39 @@ const Home = () => {
                     borderRadius: '20px',
                     transition: 'background 0.3s ease'
                   }}
-                  onMouseEnter={e => e.target.style.background = 'rgba(255, 255, 255, 0.3)'}
-                  onMouseLeave={e => e.target.style.background = 'rgba(255, 255, 255, 0.2)'}
+                  onMouseEnter={e => (e.target.style.background = 'rgba(255, 255, 255, 0.3)')}
+                  onMouseLeave={e => (e.target.style.background = 'rgba(255, 255, 255, 0.2)')}
                 >
                   📱 {profile.phone}
                 </a>
               )}
+
               {profile.formattedLocation && (
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                  fontSize: '1.1rem',
-                  padding: '0.5rem 1rem',
-                  background: 'rgba(255, 255, 255, 0.2)',
-                  borderRadius: '20px'
-                }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    fontSize: '1.1rem',
+                    padding: '0.5rem 1rem',
+                    background: 'rgba(255, 255, 255, 0.2)',
+                    borderRadius: '20px'
+                  }}
+                >
                   📍 {profile.formattedLocation}
                 </div>
               )}
             </div>
-            <div style={{
-              display: 'flex',
-              gap: '1rem',
-              justifyContent: 'center',
-              flexWrap: 'wrap'
-            }}>
+
+            {/* Social Links */}
+            <div
+              style={{
+                display: 'flex',
+                gap: '1rem',
+                justifyContent: 'center',
+                flexWrap: 'wrap'
+              }}
+            >
               {profile.socialLinks?.github && (
                 <a
                   href={profile.socialLinks.github}
@@ -220,12 +248,13 @@ const Home = () => {
                     fontSize: '1.5rem',
                     transition: 'background 0.3s ease'
                   }}
-                  onMouseEnter={e => e.target.style.background = 'rgba(255, 255, 255, 0.3)'}
-                  onMouseLeave={e => e.target.style.background = 'rgba(255, 255, 255, 0.2)'}
+                  onMouseEnter={e => (e.target.style.background = 'rgba(255, 255, 255, 0.3)')}
+                  onMouseLeave={e => (e.target.style.background = 'rgba(255, 255, 255, 0.2)')}
                 >
                   💻
                 </a>
               )}
+
               {profile.socialLinks?.linkedin && (
                 <a
                   href={profile.socialLinks.linkedin}
@@ -244,12 +273,13 @@ const Home = () => {
                     fontSize: '1.5rem',
                     transition: 'background 0.3s ease'
                   }}
-                  onMouseEnter={e => e.target.style.background = 'rgba(255, 255, 255, 0.3)'}
-                  onMouseLeave={e => e.target.style.background = 'rgba(255, 255, 255, 0.2)'}
+                  onMouseEnter={e => (e.target.style.background = 'rgba(255, 255, 255, 0.3)')}
+                  onMouseLeave={e => (e.target.style.background = 'rgba(255, 255, 255, 0.2)')}
                 >
                   💼
                 </a>
               )}
+
               {profile.socialLinks?.twitter && (
                 <a
                   href={profile.socialLinks.twitter}
@@ -268,12 +298,13 @@ const Home = () => {
                     fontSize: '1.5rem',
                     transition: 'background 0.3s ease'
                   }}
-                  onMouseEnter={e => e.target.style.background = 'rgba(255, 255, 255, 0.3)'}
-                  onMouseLeave={e => e.target.style.background = 'rgba(255, 255, 255, 0.2)'}
+                  onMouseEnter={e => (e.target.style.background = 'rgba(255, 255, 255, 0.3)')}
+                  onMouseLeave={e => (e.target.style.background = 'rgba(255, 255, 255, 0.2)')}
                 >
                   🐦
                 </a>
               )}
+
               {profile.socialLinks?.website && (
                 <a
                   href={profile.socialLinks.website}
@@ -292,17 +323,19 @@ const Home = () => {
                     fontSize: '1.5rem',
                     transition: 'background 0.3s ease'
                   }}
-                  onMouseEnter={e => e.target.style.background = 'rgba(255, 255, 255, 0.3)'}
-                  onMouseLeave={e => e.target.style.background = 'rgba(255, 255, 255, 0.2)'}
+                  onMouseEnter={e => (e.target.style.background = 'rgba(255, 255, 255, 0.3)')}
+                  onMouseLeave={e => (e.target.style.background = 'rgba(255, 255, 255, 0.2)')}
                 >
                   🌐
                 </a>
               )}
             </div>
+
+            {/* Resume Download */}
             {profile.resumeUrl && (
               <div style={{ marginTop: '2rem' }}>
                 <a
-                  href={`http://localhost:5000${profile.resumeUrl}`}
+                  href={profile.resumeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
@@ -317,8 +350,8 @@ const Home = () => {
                     boxShadow: '0 4px 15px rgba(0,0,0,0.2)',
                     transition: 'transform 0.3s ease'
                   }}
-                  onMouseEnter={e => e.target.style.transform = 'scale(1.05)'}
-                  onMouseLeave={e => e.target.style.transform = 'scale(1)'}
+                  onMouseEnter={e => (e.target.style.transform = 'scale(1.05)')}
+                  onMouseLeave={e => (e.target.style.transform = 'scale(1)')}
                 >
                   📄 Download Resume
                 </a>
@@ -327,10 +360,23 @@ const Home = () => {
           </div>
         </section>
       )}
-      <style jsx>{`
+
+      <style>{`
         @keyframes spin {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
+        }
+        @media (max-width: 768px) {
+          .contact-preview {
+            padding: 3rem 1rem !important;
+          }
+          .contact-preview h2 {
+            font-size: 2rem !important;
+          }
+          .contact-preview div {
+            flex-direction: column !important;
+            gap: 1rem !important;
+          }
         }
       `}</style>
     </div>

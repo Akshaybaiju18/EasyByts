@@ -268,7 +268,7 @@ const DashboardLayout = () => {
                   height: '40px',
                   borderRadius: '50%',
                   background: profile?.profileImage 
-                    ? `url(http://localhost:5000${profile.profileImage})` 
+                    ? `url(${profile.profileImage})` 
                     : 'linear-gradient(135deg, #3498db, #2980b9)',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
@@ -360,7 +360,7 @@ const DashboardLayout = () => {
                 height: '40px',
                 borderRadius: '50%',
                 background: profile?.profileImage 
-                  ? `url(http://localhost:5000${profile.profileImage})` 
+                  ? `url(${profile.profileImage})` 
                   : 'linear-gradient(135deg, #3498db, #2980b9)',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
@@ -498,7 +498,7 @@ const DashboardLayout = () => {
                   height: '32px',
                   borderRadius: '50%',
                   background: profile?.profileImage 
-                    ? `url(http://localhost:5000${profile.profileImage})` 
+                    ? `url(${profile.profileImage})` 
                     : 'linear-gradient(135deg, #6c757d, #495057)',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',

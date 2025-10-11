@@ -159,14 +159,6 @@ const Contact = () => {
           }}>
             Get In Touch
           </h1>
-          <p style={{
-            fontSize: '1.2rem',
-            color: '#6c757d',
-            maxWidth: '600px',
-            margin: '0 auto'
-          }}>
-            { 'Have a project in mind or want to collaborate? I\'d love to hear from you!'}
-          </p>
           
           {profile?.isAvailable && (
             <div style={{
@@ -607,7 +599,7 @@ const Contact = () => {
             {profile?.resumeUrl && (
               <div style={{ marginTop: '2rem', textAlign: 'center' }}>
                 <a
-                  href={`http://localhost:5000${profile.resumeUrl}`}
+                  href={profile.resumeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
