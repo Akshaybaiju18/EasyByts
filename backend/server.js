@@ -40,7 +40,7 @@ app.use(helmet({
 }));
 
 // ✅ CRITICAL: Move static file serving BEFORE rate limiting
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+//app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Add rate limiting
 const limiter = rateLimit({
@@ -111,7 +111,7 @@ const startServer = async () => {
   await connectDB();
   
   // ✅ Create upload directories if they don't exist
-  const fs = require('fs');
+  /*const fs = require('fs');
   const uploadsDir = path.join(__dirname, 'uploads');
   const profileDir = path.join(uploadsDir, 'profile');
   const resumeDir = path.join(uploadsDir, 'resume');
@@ -127,7 +127,7 @@ const startServer = async () => {
   if (!fs.existsSync(resumeDir)) {
     fs.mkdirSync(resumeDir);
     console.log('📁 Created uploads/resume directory');
-  }
+  }*/
   
   app.listen(PORT, () => {
     console.log('🚀=================================🚀');
