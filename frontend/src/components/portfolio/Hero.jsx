@@ -266,24 +266,23 @@ const heroStyles = `
   }
 
   /* ============================================
-     RESPONSIVE DESIGN
+     RESPONSIVE DESIGN - OPTIMIZED FOR MOBILE
      ============================================ */
 
-  /* Tablet and below (768px) */
+  /* Tablet (768px and below) */
   @media screen and (max-width: 768px) {
     .hero {
       padding: 2rem 1rem;
-      min-height: auto;
+      min-height: 100vh;
     }
 
     .hero-container {
-      grid-template-columns: 1fr !important;
-      gap: 2rem;
-      padding: 0 15px;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      text-align: center;
     }
 
     .hero-content {
-      text-align: center;
       order: 2;
     }
 
@@ -293,83 +292,32 @@ const heroStyles = `
 
     .hero-title {
       font-size: 2.5rem;
-    }
-
-    .hero-subtitle {
-      font-size: 1.5rem;
-    }
-
-    .hero-description {
-      font-size: 1.1rem;
-    }
-
-    .hero-buttons {
-      justify-content: center;
-    }
-
-    .hero-image-container {
-      width: 300px;
-      height: 300px;
-      margin: 0 auto;
-    }
-
-    .decorative-circle-1 {
-      width: 60px;
-      height: 60px;
-      top: -10px;
-      right: -10px;
-    }
-
-    .decorative-circle-2 {
-      width: 50px;
-      height: 50px;
-      bottom: -5px;
-      left: -15px;
-    }
-  }
-
-  /* Mobile Large (600px and below) */
-  @media screen and (max-width: 600px) {
-    .hero {
-      padding: 1.5rem 0.75rem;
-    }
-
-    .hero-container {
-      gap: 1.5rem;
-      padding: 0 12px;
-    }
-
-    .hero-title {
-      font-size: 2rem;
       margin-bottom: 0.75rem;
     }
 
     .hero-subtitle {
-      font-size: 1.3rem;
+      font-size: 1.5rem;
       margin-bottom: 1rem;
     }
 
     .hero-description {
-      font-size: 1rem;
+      font-size: 1.1rem;
       margin-bottom: 1.5rem;
     }
 
     .hero-buttons {
-      flex-direction: column;
+      justify-content: center;
       gap: 0.75rem;
-      width: 100%;
     }
 
     .hero-btn {
-      width: 100%;
-      max-width: 280px;
-      padding: 0.85rem 1.5rem;
+      padding: 0.9rem 1.8rem;
       font-size: 1rem;
     }
 
     .hero-image-container {
-      width: 250px;
-      height: 250px;
+      width: 280px;
+      height: 280px;
     }
 
     .profile-image-placeholder {
@@ -377,36 +325,43 @@ const heroStyles = `
     }
   }
 
-  /* Mobile Small (480px and below) */
+  /* Mobile (480px and below) */
   @media screen and (max-width: 480px) {
     .hero {
-      padding: 1.25rem 0.5rem;
+      padding: 1.5rem 0.75rem;
+      min-height: 100vh;
     }
 
     .hero-container {
-      gap: 1.25rem;
-      padding: 0 10px;
+      gap: 2rem;
     }
 
     .hero-title {
-      font-size: 1.75rem;
-      margin-bottom: 0.6rem;
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
     }
 
     .hero-subtitle {
-      font-size: 1.15rem;
-      margin-bottom: 0.85rem;
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
     }
 
     .hero-description {
-      font-size: 0.95rem;
+      font-size: 1rem;
       margin-bottom: 1.25rem;
+      line-height: 1.5;
+    }
+
+    .hero-buttons {
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
     }
 
     .hero-btn {
-      max-width: 240px;
-      padding: 0.75rem 1.25rem;
-      font-size: 0.95rem;
+      width: 100%;
+      max-width: 280px;
+      padding: 0.85rem 1.5rem;
     }
 
     .hero-image-container {
@@ -420,37 +375,37 @@ const heroStyles = `
     }
 
     .profile-image-placeholder {
-      font-size: 5rem;
+      font-size: 4.5rem;
     }
 
-    .decorative-circle-1 {
-      width: 50px;
-      height: 50px;
-    }
-
+    .decorative-circle-1,
     .decorative-circle-2 {
-      width: 40px;
-      height: 40px;
+      display: none;
     }
   }
 
-  /* Mobile Extra Small (360px and below) */
+  /* Small Mobile (360px and below) */
   @media screen and (max-width: 360px) {
+    .hero {
+      padding: 1rem 0.5rem;
+    }
+
     .hero-title {
-      font-size: 1.5rem;
+      font-size: 1.75rem;
     }
 
     .hero-subtitle {
-      font-size: 1rem;
+      font-size: 1.1rem;
     }
 
     .hero-description {
-      font-size: 0.9rem;
+      font-size: 0.95rem;
     }
 
     .hero-btn {
-      font-size: 0.9rem;
-      padding: 0.7rem 1rem;
+      font-size: 0.95rem;
+      padding: 0.75rem 1.25rem;
+      max-width: 250px;
     }
 
     .hero-image-container {
@@ -459,7 +414,7 @@ const heroStyles = `
     }
 
     .profile-image-placeholder {
-      font-size: 4.5rem;
+      font-size: 4rem;
     }
   }
 `;

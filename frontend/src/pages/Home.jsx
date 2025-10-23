@@ -118,15 +118,16 @@ const Home = () => {
           }}
         >
           <div
-            className="container"
+            className="contact-container"
             style={{ maxWidth: '800px', margin: '0 auto' }}
           >
-            <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>
+            <h2 className="contact-title" style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>
               Let's Work Together
             </h2>
 
             {profile.isAvailable && (
               <div
+                className="availability-badge"
                 style={{
                   background: 'rgba(255, 255, 255, 0.2)',
                   padding: '1rem 2rem',
@@ -142,6 +143,7 @@ const Home = () => {
             )}
 
             <p
+              className="contact-description"
               style={{
                 fontSize: '1.2rem',
                 marginBottom: '2rem',
@@ -152,6 +154,7 @@ const Home = () => {
             </p>
 
             <div
+              className="contact-info-grid"
               style={{
                 display: 'flex',
                 gap: '2rem',
@@ -163,6 +166,7 @@ const Home = () => {
               {profile.email && (
                 <a
                   href={`mailto:${profile.email}`}
+                  className="contact-link"
                   style={{
                     display: 'flex',
                     alignItems: 'center',
@@ -178,13 +182,14 @@ const Home = () => {
                   onMouseEnter={e => (e.target.style.background = 'rgba(255, 255, 255, 0.3)')}
                   onMouseLeave={e => (e.target.style.background = 'rgba(255, 255, 255, 0.2)')}
                 >
-                  📧 {profile.email}
+                  📧 <span className="contact-text">{profile.email}</span>
                 </a>
               )}
 
               {profile.phone && (
                 <a
                   href={`tel:${profile.phone}`}
+                  className="contact-link"
                   style={{
                     display: 'flex',
                     alignItems: 'center',
@@ -200,12 +205,13 @@ const Home = () => {
                   onMouseEnter={e => (e.target.style.background = 'rgba(255, 255, 255, 0.3)')}
                   onMouseLeave={e => (e.target.style.background = 'rgba(255, 255, 255, 0.2)')}
                 >
-                  📱 {profile.phone}
+                  📱 <span className="contact-text">{profile.phone}</span>
                 </a>
               )}
 
               {profile.formattedLocation && (
                 <div
+                  className="contact-link"
                   style={{
                     display: 'flex',
                     alignItems: 'center',
@@ -216,13 +222,14 @@ const Home = () => {
                     borderRadius: '20px'
                   }}
                 >
-                  📍 {profile.formattedLocation}
+                  📍 <span className="contact-text">{profile.formattedLocation}</span>
                 </div>
               )}
             </div>
 
             {/* Social Links */}
             <div
+              className="social-links-grid"
               style={{
                 display: 'flex',
                 gap: '1rem',
@@ -235,6 +242,7 @@ const Home = () => {
                   href={profile.socialLinks.github}
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="social-icon"
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',
@@ -260,6 +268,7 @@ const Home = () => {
                   href={profile.socialLinks.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="social-icon"
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',
@@ -285,6 +294,7 @@ const Home = () => {
                   href={profile.socialLinks.twitter}
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="social-icon"
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',
@@ -310,6 +320,7 @@ const Home = () => {
                   href={profile.socialLinks.website}
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="social-icon"
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',
@@ -338,6 +349,7 @@ const Home = () => {
                   href={profile.resumeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="resume-button"
                   style={{
                     display: 'inline-block',
                     padding: '1rem 2rem',
@@ -366,16 +378,75 @@ const Home = () => {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
         }
+
+        /* Mobile Responsive Styles */
         @media (max-width: 768px) {
           .contact-preview {
-            padding: 3rem 1rem !important;
+            padding: 2rem 1rem !important;
           }
-          .contact-preview h2 {
-            font-size: 2rem !important;
+          
+          .contact-title {
+            font-size: 1.75rem !important;
           }
-          .contact-preview div {
+          
+          .availability-badge {
+            padding: 0.75rem 1.5rem !important;
+            margin-bottom: 1.5rem !important;
+          }
+          
+          .availability-badge span {
+            font-size: 0.95rem !important;
+          }
+          
+          .contact-description {
+            font-size: 1rem !important;
+            padding: 0 0.5rem;
+          }
+          
+          .contact-info-grid {
             flex-direction: column !important;
             gap: 1rem !important;
+            align-items: stretch !important;
+          }
+          
+          .contact-link {
+            font-size: 0.95rem !important;
+            padding: 0.75rem 1rem !important;
+            justify-content: center !important;
+          }
+          
+          .contact-text {
+            font-size: 0.9rem;
+            word-break: break-word;
+          }
+          
+          .social-links-grid {
+            gap: 0.75rem !important;
+          }
+          
+          .social-icon {
+            width: 45px !important;
+            height: 45px !important;
+            font-size: 1.3rem !important;
+          }
+          
+          .resume-button {
+            font-size: 1rem !important;
+            padding: 0.875rem 1.75rem !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .contact-title {
+            font-size: 1.5rem !important;
+          }
+          
+          .contact-link {
+            font-size: 0.85rem !important;
+          }
+          
+          .contact-text {
+            font-size: 0.8rem;
           }
         }
       `}</style>
