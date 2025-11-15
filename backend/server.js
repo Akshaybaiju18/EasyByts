@@ -65,7 +65,7 @@ app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/profile', profileRoutes);
 app.use('/api/contact', require('./routes/contact'));
 
-app.get('/api/health', (req, res) => {
+app.get('/', (req, res) => {
   res.status(200).json({
     status: 'success',
     message: 'Portfolio CMS API is running!',
